@@ -2,35 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ZedBangers 🎶 Keyboard Edition</title>
+  <title>ZedBangers Keyboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #0f0f0f;
-      color: #fff;
+      background: #f0f0f0;
+      color: #000;
       text-align: center;
     }
-    header {
-      background: #ff004c;
-      padding: 20px;
-      font-size: 2em;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    textarea {
+      width: 95%;
+      height: 200px;
+      margin: 20px auto;
+      display: block;
+      border-radius: 8px;
+      border: 2px solid #ccc;
+      padding: 15px;
+      font-size: 1.4em;
+      background: #fff;
+      color: #000;
     }
     .keyboard {
       display: grid;
-      grid-template-columns: repeat(14, 1fr);
-      gap: 5px;
-      max-width: 900px;
-      margin: 30px auto;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 8px;
+      max-width: 1000px;
+      margin: 20px auto;
     }
     .key {
       background: #222;
+      color: #fff;
       border-radius: 6px;
-      padding: 15px;
-      font-size: 1em;
+      padding: 20px;
+      font-size: 1.2em;
       text-transform: uppercase;
       box-shadow: inset 0 -4px 0 #000;
       cursor: pointer;
@@ -40,26 +46,14 @@
       background: #444;
       box-shadow: inset 0 -2px 0 #000;
     }
-    textarea {
-      width: 90%;
-      height: 100px;
-      margin: 20px auto;
-      display: block;
-      border-radius: 8px;
-      border: none;
-      padding: 10px;
-      font-size: 1.2em;
-    }
-    .highlight {
-      color: #ff004c;
-      font-weight: bold;
+    .wide {
+      grid-column: span 2;
     }
   </style>
 </head>
 <body>
-  <header>ZedBangers 🎶</header>
 
-  <textarea id="display" placeholder="Type your song description here..."></textarea>
+  <textarea id="display" placeholder="Start typing here..."></textarea>
 
   <div class="keyboard" id="keyboard"></div>
 
@@ -79,7 +73,8 @@
     keys.forEach(k => {
       const key = document.createElement("div");
       key.className = "key";
-      key.textContent = k === "space" ? "␣" : k;
+      if (k === "space" || k === "enter" || k === "back") key.classList.add("wide");
+      key.textContent = k === "space" ? "SPACE" : k.toUpperCase();
       key.onclick = () => pressKey(k);
       keyboard.appendChild(key);
     });
@@ -104,19 +99,20 @@
     }
 
     function autoCorrect() {
-      // Simple autocorrect example
+      // Example autocorrect
       display.value = display.value.replace(/\bteh\b/gi, "the");
+      display.value = display.value.replace(/\bi\b/g, "I");
     }
 
     function autoPunctuate() {
-      // Add a period at the end if user presses enter without punctuation
+      // Add a period if line ends without punctuation
       display.value = display.value.replace(/([a-zA-Z])\n/g, "$1.\n");
     }
 
     function highlightKeywords() {
-      // Highlight keywords like "love", "music"
+      // Highlight keywords by uppercasing them
       let text = display.value;
-      const keywords = ["love","music","song","happy"];
+      const keywords = ["love","music","song","happy","fire","dance"];
       keywords.forEach(word => {
         const regex = new RegExp("\\b" + word + "\\b","gi");
         text = text.replace(regex, word.toUpperCase());
@@ -125,4 +121,4 @@
     }
   </script>
 </body>
-    </html>
+</html>
