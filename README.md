@@ -1,2 +1,1 @@
-# Keyboard
-An advanced professional android phone keyboard 
+A website that users can post theire information and more 
