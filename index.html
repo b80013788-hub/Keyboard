@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- SEO Meta Tags -->
+<meta name="description" content="Zee Websites – Share your talents, skills, music, apps, and achievements. Free platform for creators from Zambia and around the world.">
+<meta name="keywords" content="Zee Websites, Zee Man, Zambia, Talent, Skills, Music, Apps, Creativity, Free platform, Show your skills">
+<meta name="author" content="Zee Man">
 <title>Zee Websites | Share Your Talent</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -65,7 +69,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-    // Replace this with your Firebase Web App config
+    // Firebase configuration
     const firebaseConfig = {
         apiKey: "YOUR_API_KEY",
         authDomain: "zedbangers-86dad.firebaseapp.com",
@@ -87,7 +91,7 @@
     window.onload = function() {
         const submissionsDiv = document.getElementById('submissions');
         db.ref('posts').on('value', function(snapshot) {
-            submissionsDiv.innerHTML = ''; // clear current
+            submissionsDiv.innerHTML = '';
             const data = snapshot.val();
             if(data){
                 Object.values(data).reverse().forEach(post => {
@@ -108,15 +112,11 @@
         const message = document.getElementById('message').value;
 
         const newPostRef = db.ref('posts').push();
-        newPostRef.set({
-            name: name,
-            email: email,
-            message: message
-        });
+        newPostRef.set({ name: name, email: email, message: message });
 
         this.reset();
     });
 </script>
 
 </body>
-    </html>
+            </html>
