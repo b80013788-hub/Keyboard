@@ -6,18 +6,22 @@
 <title>Zee Websites | Share Your Talent</title>  
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
 <style>  
-    /* ----- DARK THEME & GRAY BUTTONS (existing styles updated) ----- */  
+    /* ----- CUSTOM STYLES (white header, dark body, black footer, gray buttons) ----- */  
     body {  
         margin:0;  
         font-family:'Roboto',sans-serif;  
-        background:#121212;      /* dark background */  
-        color:#e0e0e0;           /* light text */  
+        background:#121212;        /* dark background for main content */  
+        color:#e0e0e0;  
     }  
     header {  
-        background:#1f1f1f;      /* dark header */  
-        color:#ffffff;  
+        background:#ffffff;        /* white header */  
+        color:#121212;             /* dark text */  
         padding:20px;  
         text-align:center;  
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);  
+    }  
+    header h1, header p {  
+        color:#121212;  
     }  
     nav {  
         display:flex;  
@@ -27,7 +31,7 @@
         flex-wrap:wrap;  
     }  
     nav a {  
-        color:#ffffff;  
+        color:#121212;             /* dark nav links */  
         text-decoration:none;  
         font-weight:bold;  
         cursor:pointer;  
@@ -57,6 +61,10 @@
     .btn:hover {  
         background:#5a6268;       /* darker gray */  
     }  
+    .btn:disabled {  
+        opacity:0.6;  
+        cursor:not-allowed;  
+    }  
     input, textarea {  
         width:100%;  
         padding:10px;  
@@ -70,35 +78,65 @@
     input::placeholder, textarea::placeholder {  
         color:#888;  
     }  
+    /* Submission cards (full width, no bubbles) */  
     .submission {  
         background:#2a2a2a;  
-        padding:15px;  
+        padding:20px;  
         border-radius:8px;  
-        margin:10px 0;  
+        margin:15px 0;  
         box-shadow:0 2px 4px rgba(0,0,0,0.5);  
         border: 1px solid #444;  
         color:#e0e0e0;  
     }  
-    .submission img {  
-        max-width:100%;  
-        max-height:300px;  
-        margin-top:10px;  
-        border-radius:4px;  
-    }  
-    .submission p {  
-        margin:5px 0;  
-    }  
-    .submission .caption {  
-        font-style:italic;  
+    .submission .meta {  
+        font-size:0.85rem;  
         color:#aaa;  
+        margin-bottom:8px;  
+        display: flex;  
+        justify-content: space-between;  
+        align-items: center;  
+    }  
+    .submission .name {  
+        font-weight:bold;  
+        color:#fff;  
+    }  
+    .submission .timestamp {  
+        font-style:italic;  
+    }  
+    .submission .message {  
+        margin:10px 0;  
+        line-height:1.5;  
+    }  
+    .like-section {  
+        display: flex;  
+        align-items: center;  
+        gap: 10px;  
+        margin-top: 10px;  
+    }  
+    .like-btn {  
+        background: transparent;  
+        border: 1px solid #6c757d;  
+        color: #6c757d;  
+        padding: 5px 15px;  
+        border-radius: 20px;  
+        cursor: pointer;  
+        font-size: 0.9rem;  
+        transition: all 0.2s;  
+    }  
+    .like-btn:hover {  
+        background: #6c757d;  
+        color: white;  
+    }  
+    .like-count {  
+        font-weight: bold;  
+        color: #ffc107;  
     }  
     footer {  
         text-align:center;  
         padding:20px;  
-        background:#1f1f1f;  
+        background:#000000;        /* black footer */  
         color:#aaa;  
     }  
-    /* Search box styling */  
     #searchInput {  
         width:100%;  
         padding:10px;  
@@ -108,17 +146,22 @@
         background:#2c2c2c;  
         color:#e0e0e0;  
     }  
-    /* Loading/disabled state */  
-    .btn:disabled {  
-        opacity:0.6;  
-        cursor:not-allowed;  
+    /* Error message styling */  
+    #formError {  
+        color: #ff8a80;  
+        background: #330000;  
+        border: 1px solid #ff4444;  
+        border-radius: 5px;  
+        padding: 10px;  
+        margin: 10px 0;  
+        display: none;  
     }  
 </style>  
 </head>  
 <body>  
 <header>  
     <h1>Welcome to Zee Websites</h1>  
-    <p>Share your talents, skills, career info, or personal achievements here.</p>  
+    <p>Share your talent, skill, or business</p>   <!-- updated tagline -->  
     <nav>  
         <a onclick="scrollToSection('home')">Home</a>  
         <a onclick="scrollToSection('about')">About</a>  
@@ -147,17 +190,13 @@
         <label>Talent / Skill / Career Info:</label>  
         <textarea id="message" placeholder="Describe your talent, skill, or career..." required></textarea>  
 
-        <!-- NEW: Image upload & description (optional) -->  
-        <label>Upload Picture (optional):</label>  
-        <input type="file" id="imageUpload" accept="image/*">  
-        <label>Picture Description (optional):</label>  
-        <textarea id="pictureDescription" placeholder="Say something about the picture..."></textarea>  
+        <!-- No image upload – removed completely -->  
 
         <button type="submit" class="btn" id="submitBtn">Submit</button>  
     </form>  
+    <div id="formError"></div>  
 
     <h3>Submissions:</h3>  
-    <!-- NEW: Search input -->  
     <input type="text" id="searchInput" placeholder="🔍 Search by name, email, or text...">  
     <div id="submissions"></div>  
 </section>  
@@ -166,65 +205,29 @@
     &copy; 2026 Zee Websites. All rights reserved.  
 </footer>  
 
-<!-- Firebase (added Storage) -->  
+<!-- Firebase (only Realtime Database) -->  
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>  
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>  
 <script>  
-    // Replace this with your Firebase Web App config  
+    // 🔴 REPLACE WITH YOUR ACTUAL FIREBASE CONFIG  
     const firebaseConfig = {  
         apiKey: "YOUR_API_KEY",  
         authDomain: "zedbangers-86dad.firebaseapp.com",  
         databaseURL: "https://zedbangers-86dad-default-rtdb.firebaseio.com",  
         projectId: "zedbangers-86dad",  
-        storageBucket: "zedbangers-86dad.appspot.com",   // already correct  
+        storageBucket: "zedbangers-86dad.appspot.com",  
         messagingSenderId: "YOUR_SENDER_ID",  
         appId: "YOUR_APP_ID"  
     };  
     firebase.initializeApp(firebaseConfig);  
     const db = firebase.database();  
-    const storage = firebase.storage();   // NEW: Storage reference  
 
     // Smooth scroll  
     function scrollToSection(id){  
         document.getElementById(id).scrollIntoView({ behavior: 'smooth' });  
     }  
 
-    // Global posts array and filter variable  
-    let allPosts = [];  
-    let currentFilter = '';  
-
-    // Render submissions based on filter  
-    function renderSubmissions() {  
-        const submissionsDiv = document.getElementById('submissions');  
-        submissionsDiv.innerHTML = '';  
-
-        const filtered = allPosts.filter(post => {  
-            const searchText = currentFilter.toLowerCase();  
-            return (  
-                post.name.toLowerCase().includes(searchText) ||  
-                post.email.toLowerCase().includes(searchText) ||  
-                (post.message && post.message.toLowerCase().includes(searchText)) ||  
-                (post.caption && post.caption.toLowerCase().includes(searchText))  
-            );  
-        });  
-
-        filtered.forEach(post => {  
-            const div = document.createElement('div');  
-            div.className = 'submission';  
-            let html = `<strong>${escapeHtml(post.name)}</strong> (${escapeHtml(post.email)})<p>${escapeHtml(post.message)}</p>`;  
-            if (post.imageUrl) {  
-                html += `<img src="${escapeHtml(post.imageUrl)}" alt="User upload">`;  
-            }  
-            if (post.caption) {  
-                html += `<p class="caption">📷 ${escapeHtml(post.caption)}</p>`;  
-            }  
-            div.innerHTML = html;  
-            submissionsDiv.appendChild(div);  
-        });  
-    }  
-
-    // Simple escape to prevent XSS  
+    // Escape HTML to prevent XSS  
     function escapeHtml(unsafe) {  
         if (!unsafe) return '';  
         return unsafe  
@@ -235,14 +238,103 @@
             .replace(/'/g, "&#039;");  
     }  
 
-    // Load posts from Firebase  
+    // Format timestamp  
+    function formatTimestamp(timestamp) {  
+        if (!timestamp) return 'Just now';  
+        const date = new Date(timestamp);  
+        return date.toLocaleString();  // shows date and time in user's locale  
+    }  
+
+    // Global posts and filter  
+    let allPosts = [];  
+    let currentFilter = '';  
+
+    // Render submissions with like buttons and timestamps  
+    function renderSubmissions() {  
+        const submissionsDiv = document.getElementById('submissions');  
+        submissionsDiv.innerHTML = '';  
+
+        const filtered = allPosts.filter(post => {  
+            const searchText = currentFilter.toLowerCase();  
+            return (  
+                (post.name && post.name.toLowerCase().includes(searchText)) ||  
+                (post.email && post.email.toLowerCase().includes(searchText)) ||  
+                (post.message && post.message.toLowerCase().includes(searchText))  
+            );  
+        });  
+
+        filtered.forEach(post => {  
+            const postId = post.id;  // we stored the Firebase key  
+            const div = document.createElement('div');  
+            div.className = 'submission';  
+
+            // Meta line with name, email, and timestamp  
+            const meta = document.createElement('div');  
+            meta.className = 'meta';  
+            meta.innerHTML = `  
+                <span class="name">${escapeHtml(post.name)}</span>  
+                <span class="email">(${escapeHtml(post.email)})</span>  
+                <span class="timestamp">${formatTimestamp(post.timestamp)}</span>  
+            `;  
+
+            // Message  
+            const messageDiv = document.createElement('div');  
+            messageDiv.className = 'message';  
+            messageDiv.textContent = post.message;  
+
+            // Like section  
+            const likeSection = document.createElement('div');  
+            likeSection.className = 'like-section';  
+            likeSection.innerHTML = `  
+                <button class="like-btn" data-id="${postId}">👍 Like</button>  
+                <span class="like-count" id="like-${postId}">${post.likes || 0}</span>  
+            `;  
+
+            div.appendChild(meta);  
+            div.appendChild(messageDiv);  
+            div.appendChild(likeSection);  
+            submissionsDiv.appendChild(div);  
+        });  
+
+        // Attach like button event listeners after rendering  
+        document.querySelectorAll('.like-btn').forEach(btn => {  
+            btn.addEventListener('click', async function(e) {  
+                const postId = this.dataset.id;  
+                const likeSpan = document.getElementById(`like-${postId}`);  
+                if (!postId) return;  
+
+                // Disable button temporarily to prevent double clicks  
+                this.disabled = true;  
+
+                try {  
+                    // Increment likes using Firebase transaction (safe)  
+                    const postRef = db.ref('posts/' + postId);  
+                    await postRef.child('likes').transaction(currentLikes => {  
+                        return (currentLikes || 0) + 1;  
+                    });  
+                    // No need to manually update UI – the listener will refresh  
+                } catch (error) {  
+                    console.error('Like error:', error);  
+                    alert('Could not add like. Try again.');  
+                } finally {  
+                    this.disabled = false;  
+                }  
+            });  
+        });  
+    }  
+
+    // Load posts from Firebase and keep real‑time updates  
     window.onload = function() {  
-        db.ref('posts').on('value', function(snapshot) {  
+        const postsRef = db.ref('posts');  
+        postsRef.on('value', function(snapshot) {  
             allPosts = [];  
             const data = snapshot.val();  
             if (data) {  
-                // Convert to array and reverse (newest first)  
-                allPosts = Object.values(data).reverse();  
+                // Convert to array, include Firebase key as id, and sort newest first  
+                allPosts = Object.entries(data).map(([id, post]) => ({  
+                    id,  
+                    ...post  
+                })).reverse();  
             }  
             renderSubmissions();  
         });  
@@ -252,48 +344,45 @@
             currentFilter = e.target.value;  
             renderSubmissions();  
         });  
-    }  
+    };  
 
-    // Handle form submission with image upload  
+    // Handle form submission (no image)  
     document.getElementById('talentForm').addEventListener('submit', async function(e){  
         e.preventDefault();  
 
-        const name = document.getElementById('name').value;  
-        const email = document.getElementById('email').value;  
-        const message = document.getElementById('message').value;  
-        const file = document.getElementById('imageUpload').files[0];  
-        const caption = document.getElementById('pictureDescription').value;  
+        const name = document.getElementById('name').value.trim();  
+        const email = document.getElementById('email').value.trim();  
+        const message = document.getElementById('message').value.trim();  
+        const errorDiv = document.getElementById('formError');  
+        errorDiv.style.display = 'none';  
+
+        if (!name || !email || !message) {  
+            errorDiv.textContent = 'All fields are required.';  
+            errorDiv.style.display = 'block';  
+            return;  
+        }  
 
         const submitBtn = document.getElementById('submitBtn');  
         submitBtn.disabled = true;  
-        submitBtn.textContent = 'Uploading...';  
+        submitBtn.textContent = 'Posting...';  
 
         try {  
-            let imageUrl = null;  
-
-            // Upload image if selected  
-            if (file) {  
-                // Create a unique filename  
-                const fileName = `${Date.now()}_${file.name}`;  
-                const storageRef = storage.ref('images/' + fileName);  
-                await storageRef.put(file);  
-                imageUrl = await storageRef.getDownloadURL();  
-            }  
-
-            // Save post to database  
+            // Create new post with likes=0 and server timestamp  
             const newPostRef = db.ref('posts').push();  
             await newPostRef.set({  
-                name: name,  
-                email: email,  
-                message: message,  
-                imageUrl: imageUrl || null,  
-                caption: caption || null  
+                name,  
+                email,  
+                message,  
+                likes: 0,  
+                timestamp: firebase.database.ServerValue.TIMESTAMP  
             });  
 
             // Reset form  
             this.reset();  
         } catch (error) {  
-            alert('Upload failed: ' + error.message);  
+            console.error('Post error:', error);  
+            errorDiv.textContent = 'Failed to post. Check your connection.';  
+            errorDiv.style.display = 'block';  
         } finally {  
             submitBtn.disabled = false;  
             submitBtn.textContent = 'Submit';  
