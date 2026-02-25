@@ -1,122 +1,304 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- SEO Meta Tags -->
-<meta name="description" content="Zee Websites – Share your talents, skills, music, apps, and achievements. Free platform for creators from Zambia and around the world.">
-<meta name="keywords" content="Zee Websites, Zee Man, Zambia, Talent, Skills, Music, Apps, Creativity, Free platform, Show your skills">
-<meta name="author" content="Zee Man">
-<title>Zee Websites | Share Your Talent</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<style>
-    body { margin:0; font-family:'Roboto',sans-serif; background:#f5f5f5; color:#333; }
-    header { background:#1e90ff; color:white; padding:20px; text-align:center; }
-    nav { display:flex; justify-content:center; gap:20px; margin-top:10px; flex-wrap:wrap; }
-    nav a { color:white; text-decoration:none; font-weight:bold; cursor:pointer; }
-    section { max-width:900px; margin:40px auto; padding:0 20px; }
-    h1,h2 { text-align:center; }
-    .btn { display:inline-block; padding:10px 20px; margin-top:10px; background:#ff6347; color:white; border-radius:5px; text-decoration:none; cursor:pointer; }
-    .btn:hover { background:#ff4500; }
-    input, textarea { width:100%; padding:10px; margin:5px 0; border-radius:5px; border:1px solid #ccc; font-size:1rem; }
-    .submission { background:#fff; padding:15px; border-radius:8px; margin:10px 0; box-shadow:0 2px 4px rgba(0,0,0,0.1); }
-</style>
-</head>
-<body>
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Zee Websites | Share Your Talent</title>  
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+<style>  
+    /* ----- DARK THEME & GRAY BUTTONS (existing styles updated) ----- */  
+    body {  
+        margin:0;  
+        font-family:'Roboto',sans-serif;  
+        background:#121212;      /* dark background */  
+        color:#e0e0e0;           /* light text */  
+    }  
+    header {  
+        background:#1f1f1f;      /* dark header */  
+        color:#ffffff;  
+        padding:20px;  
+        text-align:center;  
+    }  
+    nav {  
+        display:flex;  
+        justify-content:center;  
+        gap:20px;  
+        margin-top:10px;  
+        flex-wrap:wrap;  
+    }  
+    nav a {  
+        color:#ffffff;  
+        text-decoration:none;  
+        font-weight:bold;  
+        cursor:pointer;  
+    }  
+    section {  
+        max-width:900px;  
+        margin:40px auto;  
+        padding:0 20px;  
+    }  
+    h1, h2, h3 {  
+        text-align:center;  
+        color:#ffffff;  
+    }  
+    /* Gray buttons */  
+    .btn {  
+        display:inline-block;  
+        padding:10px 20px;  
+        margin-top:10px;  
+        background:#6c757d;       /* gray */  
+        color:white;  
+        border-radius:5px;  
+        text-decoration:none;  
+        cursor:pointer;  
+        border: none;  
+        font-size:1rem;  
+    }  
+    .btn:hover {  
+        background:#5a6268;       /* darker gray */  
+    }  
+    input, textarea {  
+        width:100%;  
+        padding:10px;  
+        margin:5px 0;  
+        border-radius:5px;  
+        border:1px solid #444;  
+        font-size:1rem;  
+        background:#2c2c2c;  
+        color:#e0e0e0;  
+    }  
+    input::placeholder, textarea::placeholder {  
+        color:#888;  
+    }  
+    .submission {  
+        background:#2a2a2a;  
+        padding:15px;  
+        border-radius:8px;  
+        margin:10px 0;  
+        box-shadow:0 2px 4px rgba(0,0,0,0.5);  
+        border: 1px solid #444;  
+        color:#e0e0e0;  
+    }  
+    .submission img {  
+        max-width:100%;  
+        max-height:300px;  
+        margin-top:10px;  
+        border-radius:4px;  
+    }  
+    .submission p {  
+        margin:5px 0;  
+    }  
+    .submission .caption {  
+        font-style:italic;  
+        color:#aaa;  
+    }  
+    footer {  
+        text-align:center;  
+        padding:20px;  
+        background:#1f1f1f;  
+        color:#aaa;  
+    }  
+    /* Search box styling */  
+    #searchInput {  
+        width:100%;  
+        padding:10px;  
+        margin-bottom:15px;  
+        border-radius:5px;  
+        border:1px solid #444;  
+        background:#2c2c2c;  
+        color:#e0e0e0;  
+    }  
+    /* Loading/disabled state */  
+    .btn:disabled {  
+        opacity:0.6;  
+        cursor:not-allowed;  
+    }  
+</style>  
+</head>  
+<body>  
+<header>  
+    <h1>Welcome to Zee Websites</h1>  
+    <p>Share your talents, skills, career info, or personal achievements here.</p>  
+    <nav>  
+        <a onclick="scrollToSection('home')">Home</a>  
+        <a onclick="scrollToSection('about')">About</a>  
+        <a onclick="scrollToSection('contact')">Share Your Talent</a>  
+    </nav>  
+</header>  
 
-<header>
-    <h1>Welcome to Zee Websites</h1>
-    <p>Share your talents, skills, career info, or personal achievements here.</p>
-    <nav>
-        <a onclick="scrollToSection('home')">Home</a>
-        <a onclick="scrollToSection('about')">About</a>
-        <a onclick="scrollToSection('contact')">Share Your Talent</a>
-    </nav>
-</header>
+<section id="home">  
+    <h2>Showcase Your Talent</h2>  
+    <p>Post updates, skills, achievements, or your personal information. Everything you submit will appear below and stay saved permanently.</p>  
+    <a class="btn" onclick="scrollToSection('contact')">Get Started</a>  
+</section>  
 
-<section id="home">
-    <h2>Showcase Your Talent</h2>
-    <p>Post updates, skills, achievements, or your personal information. Everything you submit will appear below and stay saved permanently.</p>
-    <a class="btn" onclick="scrollToSection('contact')">Get Started</a>
-</section>
+<section id="about">  
+    <h2>About Zee Websites</h2>  
+    <p>This is a platform created by Zee, a multi-talented Zambian. Share your skills, achievements, and career info freely. Built for users to post without subscriptions or login.</p>  
+</section>  
 
-<section id="about">
-    <h2>About Zee Websites</h2>
-    <p>This is a platform created by Zee, a multi-talented Zambian. Share your skills, achievements, and career info freely. Built for users to post without subscriptions or login.</p>
-</section>
+<section id="contact">  
+    <h2>Share Your Talent</h2>  
+    <form id="talentForm">  
+        <label>Name:</label>  
+        <input type="text" id="name" placeholder="Your Name" required>  
+        <label>Email:</label>  
+        <input type="email" id="email" placeholder="Your Email" required>  
+        <label>Talent / Skill / Career Info:</label>  
+        <textarea id="message" placeholder="Describe your talent, skill, or career..." required></textarea>  
 
-<section id="contact">
-    <h2>Share Your Talent</h2>
-    <form id="talentForm">
-        <label>Name:</label>
-        <input type="text" id="name" placeholder="Your Name" required>
-        <label>Email:</label>
-        <input type="email" id="email" placeholder="Your Email" required>
-        <label>Talent / Skill / Career Info:</label>
-        <textarea id="message" placeholder="Describe your talent, skill, or career..." required></textarea>
-        <button type="submit" class="btn">Submit</button>
-    </form>
-    <h3>Submissions:</h3>
-    <div id="submissions"></div>
-</section>
+        <!-- NEW: Image upload & description (optional) -->  
+        <label>Upload Picture (optional):</label>  
+        <input type="file" id="imageUpload" accept="image/*">  
+        <label>Picture Description (optional):</label>  
+        <textarea id="pictureDescription" placeholder="Say something about the picture..."></textarea>  
 
-<footer>
-    &copy; 2026 Zee Websites. All rights reserved.
-</footer>
+        <button type="submit" class="btn" id="submitBtn">Submit</button>  
+    </form>  
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <h3>Submissions:</h3>  
+    <!-- NEW: Search input -->  
+    <input type="text" id="searchInput" placeholder="🔍 Search by name, email, or text...">  
+    <div id="submissions"></div>  
+</section>  
 
-<script>
-    // Firebase configuration
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "zedbangers-86dad.firebaseapp.com",
-        databaseURL: "https://zedbangers-86dad-default-rtdb.firebaseio.com",
-        projectId: "zedbangers-86dad",
-        storageBucket: "zedbangers-86dad.appspot.com",
-        messagingSenderId: "YOUR_SENDER_ID",
-        appId: "YOUR_APP_ID"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+<footer>  
+    &copy; 2026 Zee Websites. All rights reserved.  
+</footer>  
 
-    // Smooth scroll
-    function scrollToSection(id){
-        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
+<!-- Firebase (added Storage) -->  
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>  
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>  
+<script>  
+    // Replace this with your Firebase Web App config  
+    const firebaseConfig = {  
+        apiKey: "YOUR_API_KEY",  
+        authDomain: "zedbangers-86dad.firebaseapp.com",  
+        databaseURL: "https://zedbangers-86dad-default-rtdb.firebaseio.com",  
+        projectId: "zedbangers-86dad",  
+        storageBucket: "zedbangers-86dad.appspot.com",   // already correct  
+        messagingSenderId: "YOUR_SENDER_ID",  
+        appId: "YOUR_APP_ID"  
+    };  
+    firebase.initializeApp(firebaseConfig);  
+    const db = firebase.database();  
+    const storage = firebase.storage();   // NEW: Storage reference  
 
-    // Load posts from Firebase
-    window.onload = function() {
-        const submissionsDiv = document.getElementById('submissions');
-        db.ref('posts').on('value', function(snapshot) {
-            submissionsDiv.innerHTML = '';
-            const data = snapshot.val();
-            if(data){
-                Object.values(data).reverse().forEach(post => {
-                    const div = document.createElement('div');
-                    div.className = 'submission';
-                    div.innerHTML = `<strong>${post.name}</strong> (${post.email})<p>${post.message}</p>`;
-                    submissionsDiv.appendChild(div);
-                });
-            }
-        });
-    }
+    // Smooth scroll  
+    function scrollToSection(id){  
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });  
+    }  
 
-    // Handle form submission
-    document.getElementById('talentForm').addEventListener('submit', function(e){
-        e.preventDefault();
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
+    // Global posts array and filter variable  
+    let allPosts = [];  
+    let currentFilter = '';  
 
-        const newPostRef = db.ref('posts').push();
-        newPostRef.set({ name: name, email: email, message: message });
+    // Render submissions based on filter  
+    function renderSubmissions() {  
+        const submissionsDiv = document.getElementById('submissions');  
+        submissionsDiv.innerHTML = '';  
 
-        this.reset();
-    });
-</script>
+        const filtered = allPosts.filter(post => {  
+            const searchText = currentFilter.toLowerCase();  
+            return (  
+                post.name.toLowerCase().includes(searchText) ||  
+                post.email.toLowerCase().includes(searchText) ||  
+                (post.message && post.message.toLowerCase().includes(searchText)) ||  
+                (post.caption && post.caption.toLowerCase().includes(searchText))  
+            );  
+        });  
 
-</body>
-            </html>
+        filtered.forEach(post => {  
+            const div = document.createElement('div');  
+            div.className = 'submission';  
+            let html = `<strong>${escapeHtml(post.name)}</strong> (${escapeHtml(post.email)})<p>${escapeHtml(post.message)}</p>`;  
+            if (post.imageUrl) {  
+                html += `<img src="${escapeHtml(post.imageUrl)}" alt="User upload">`;  
+            }  
+            if (post.caption) {  
+                html += `<p class="caption">📷 ${escapeHtml(post.caption)}</p>`;  
+            }  
+            div.innerHTML = html;  
+            submissionsDiv.appendChild(div);  
+        });  
+    }  
+
+    // Simple escape to prevent XSS  
+    function escapeHtml(unsafe) {  
+        if (!unsafe) return '';  
+        return unsafe  
+            .replace(/&/g, "&amp;")  
+            .replace(/</g, "&lt;")  
+            .replace(/>/g, "&gt;")  
+            .replace(/"/g, "&quot;")  
+            .replace(/'/g, "&#039;");  
+    }  
+
+    // Load posts from Firebase  
+    window.onload = function() {  
+        db.ref('posts').on('value', function(snapshot) {  
+            allPosts = [];  
+            const data = snapshot.val();  
+            if (data) {  
+                // Convert to array and reverse (newest first)  
+                allPosts = Object.values(data).reverse();  
+            }  
+            renderSubmissions();  
+        });  
+
+        // Search input listener  
+        document.getElementById('searchInput').addEventListener('input', function(e) {  
+            currentFilter = e.target.value;  
+            renderSubmissions();  
+        });  
+    }  
+
+    // Handle form submission with image upload  
+    document.getElementById('talentForm').addEventListener('submit', async function(e){  
+        e.preventDefault();  
+
+        const name = document.getElementById('name').value;  
+        const email = document.getElementById('email').value;  
+        const message = document.getElementById('message').value;  
+        const file = document.getElementById('imageUpload').files[0];  
+        const caption = document.getElementById('pictureDescription').value;  
+
+        const submitBtn = document.getElementById('submitBtn');  
+        submitBtn.disabled = true;  
+        submitBtn.textContent = 'Uploading...';  
+
+        try {  
+            let imageUrl = null;  
+
+            // Upload image if selected  
+            if (file) {  
+                // Create a unique filename  
+                const fileName = `${Date.now()}_${file.name}`;  
+                const storageRef = storage.ref('images/' + fileName);  
+                await storageRef.put(file);  
+                imageUrl = await storageRef.getDownloadURL();  
+            }  
+
+            // Save post to database  
+            const newPostRef = db.ref('posts').push();  
+            await newPostRef.set({  
+                name: name,  
+                email: email,  
+                message: message,  
+                imageUrl: imageUrl || null,  
+                caption: caption || null  
+            });  
+
+            // Reset form  
+            this.reset();  
+        } catch (error) {  
+            alert('Upload failed: ' + error.message);  
+        } finally {  
+            submitBtn.disabled = false;  
+            submitBtn.textContent = 'Submit';  
+        }  
+    });  
+</script>  
+</body>  
+    </html>
